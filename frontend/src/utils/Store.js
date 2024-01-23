@@ -1,7 +1,5 @@
 import { atom } from "jotai";
 
-const toDoAtom = atom([]);
-const textAtom = atom("");
-const isUpdatingAtom = atom("");
+const isUpdatingAtom = atom(false);
 
-export { toDoAtom, textAtom, isUpdatingAtom };
+export { isUpdatingAtom };

@@ -1,17 +1,28 @@
 import PropTypes from "prop-types";
-import { addToDo } from "../utils/HandleApi";
+import { addToDo, updateToDo } from "../utils/HandleApi";
 import { Day } from "./Day";
 import { Time } from "./Time";
+import { useAtom } from "jotai";
+import { isUpdatingAtom } from "../utils/Store";
 
-export const InputBar = ({ text, setText, setToDo }) => {
+export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
+  const [isUpdating, setIsUpdating] = useAtom(isUpdatingAtom);
   const addToDoHandler = () => {
     addToDo(text, setText, setToDo);
     setText("");
   };
 
+  const updateToDoHandler = () => {
+    updateToDo(toDoId, text, setText, setToDo, setIsUpdating);
+  };
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      addToDoHandler();
+      if (isUpdating == true) {
+        updateToDoHandler();
+      } else {
+        addToDoHandler();
+      }
     }
   };
 
@@ -25,12 +36,13 @@ export const InputBar = ({ text, setText, setToDo }) => {
         <button
           className="px-6 py-2 text-sm font-[500] rounded-2xl bg-blue-300"
           onClick={() => {
-            addToDoHandler;
+            isUpdating ? updateToDoHandler() : addToDoHandler();
           }}
         >
-          Add
+          {isUpdating ? "Update" : "Add"}
         </button>
         <input
+          ref={inputRef}
           type="text"
           placeholder="Add Task..."
           className="bg-[#edf2f6] w-full p-3 rounded-lg font-mono"
@@ -47,4 +59,7 @@ InputBar.propTypes = {
   text: PropTypes.string,
   setText: PropTypes.func,
   setToDo: PropTypes.func,
+  toDoId: PropTypes.string,
+  focusInput: PropTypes.func,
+  inputRef: PropTypes.object,
 };
