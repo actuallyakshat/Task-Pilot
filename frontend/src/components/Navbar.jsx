@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import { isDarkAtom } from "../utils/Store";
 import { useAtom } from "jotai";
+import { FaRegSun, FaRegMoon } from "react-icons/fa";
+import useSound from "use-sound";
+import switchsound from "../assets/sounds/switch.mp3";
+
 export const Navbar = () => {
   const [isDark, setIsDark] = useAtom(isDarkAtom);
+  const [switchSound] = useSound(switchsound, {volume:0.8});
   const themeHandler = () => {
+    switchSound();
     setIsDark(!isDark);
   };
   return (
@@ -19,7 +25,10 @@ export const Navbar = () => {
           </h1>
         </Link>
         <div className="flex gap-6">
-          <button onClick={themeHandler}>dark</button>
+          <button onClick={themeHandler}>
+            {isDark ? <FaRegMoon /> : <FaRegSun />}
+          </button>
+
           <Link to="/login">
             <button>login</button>
           </Link>

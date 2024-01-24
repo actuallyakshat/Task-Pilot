@@ -2,11 +2,24 @@ import PropTypes from "prop-types";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import useSound from "use-sound";
+import checkSound from "../assets/sounds/check.mp3";
+import uncheckSound from "../assets/sounds/uncheck.mp3";
+import deleteSound from "../assets/sounds/deleteSound.mp3";
 
 export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [checkTodoSound] = useSound(checkSound);
+  const [uncheckTodoSound] = useSound(uncheckSound, { volume: 0.5 });
+  const [deleteTodoSound] = useSound(deleteSound, { volume: 0.5 });
 
   const handleCheckboxChange = () => {
+    if (!isChecked) {
+      checkTodoSound();
+    } else {
+      uncheckTodoSound();
+    }
     setIsChecked(!isChecked);
   };
 
@@ -17,6 +30,8 @@ export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
 
   const deleteToDoHandler = () => {
     deleteTodo();
+    deleteTodoSound();
+    toast.error("Deleted Task");
   };
 
   return (

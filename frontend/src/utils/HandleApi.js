@@ -27,13 +27,13 @@ const addToDo = async (text, setText, setToDo) => {
     });
 };
 
-const updateToDo = async (ToDoId, text, setToDo, setText, setIsUpdating) => {
+const updateToDo = async (ToDoId, text, setText, setToDo, setIsUpdating) => {
   await axios
     .put(`${baseUrl}/update-todo`, { _id: ToDoId, text: text })
     .then(() => {
       setIsUpdating(false);
-      setText("");
       getAllToDo(setToDo);
+      setText("");
 
       console.log("Todo Updated Successfully");
     })

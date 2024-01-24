@@ -17,6 +17,7 @@ export const ListContainer = () => {
   }, []);
 
   const updateTodo = (_id, text) => {
+    console.log("The text is => ", text);
     setText(text);
     setToDoId(_id);
     setIsUpdating(true);
