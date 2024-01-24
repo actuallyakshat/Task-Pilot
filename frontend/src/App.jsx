@@ -4,12 +4,15 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/login";
 import { Signup } from "./components/Signup";
 import { PageNotFound } from "./components/PageNotFound";
+import { isDarkAtom } from "./utils/Store";
+import { useAtomValue } from "jotai";
 
 function App() {
+  const isDark = useAtomValue(isDarkAtom);
   return (
     <div className="min-h-screen h-full w-full flex flex-col">
       <Navbar />
-      <div>
+      <div className={`${isDark ? "bg-black" : "" }`}>
         <Routes>
           <Route path="/" element={<ListContainer />}></Route>
           <Route path="/login" element={<Login />} />

@@ -1,11 +1,12 @@
 import axios from "axios";
 const baseUrl = "http://localhost:3000";
 
-const getAllToDo = (setToDo) => {
-  axios
+const getAllToDo = async (setToDo) => {
+  await axios
     .get(`${baseUrl}`)
     .then(({ data }) => {
       console.log("Type of data = ", typeof data);
+      console.log("data is = ", data);
       setToDo(data);
     })
     .catch((error) => {
@@ -13,8 +14,8 @@ const getAllToDo = (setToDo) => {
     });
 };
 
-const addToDo = (text, setText, setToDo) => {
-  axios
+const addToDo = async (text, setText, setToDo) => {
+  await axios
     .post(`${baseUrl}/create-todo`, { text })
     .then(({ data }) => {
       console.log(data);
@@ -26,13 +27,14 @@ const addToDo = (text, setText, setToDo) => {
     });
 };
 
-const updateToDo = (ToDoId, text, setToDo, setText, setIsUpdating) => {
-  axios
+const updateToDo = async (ToDoId, text, setToDo, setText, setIsUpdating) => {
+  await axios
     .put(`${baseUrl}/update-todo`, { _id: ToDoId, text: text })
     .then(() => {
       setIsUpdating(false);
       setText("");
       getAllToDo(setToDo);
+
       console.log("Todo Updated Successfully");
     })
     .catch((error) => {

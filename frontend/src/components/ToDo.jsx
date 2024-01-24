@@ -20,7 +20,7 @@ export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
   };
 
   return (
-    <div className="w-[70%] mx-auto bg-gray-50 my-4 flex items-center justify-between shadow-md hover:bg-gray-200 transition-colors">
+    <div className="w-[70%] mx-auto bg-gray-50 my-4 flex items-center justify-between rounded-md shadow-md hover:bg-gray-200 transition-colors">
       <div
         className="flex flex-grow items-center h-full p-4 gap-4 cursor-pointer"
         onClick={handleCheckboxChange}

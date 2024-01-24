@@ -22,10 +22,10 @@ export const ListContainer = () => {
     setIsUpdating(true);
   };
 
-  console.log("toDo in ListContainer:", typeof(toDo), toDo); 
+  console.log("toDo in ListContainer:", typeof toDo, "value of todo =", toDo);
 
   return (
-    <div className="mx-auto px-4 my-12 md:min-h-[600px] w-[60%] h-full">
+    <div className={"mx-auto px-4 my-12 md:min-h-[600px] w-[60%] h-full"}>
       <InputBar
         text={text}
         setText={setText}

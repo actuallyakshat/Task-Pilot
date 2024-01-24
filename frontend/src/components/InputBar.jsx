@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 import { addToDo, updateToDo } from "../utils/HandleApi";
 import { Day } from "./Day";
 import { Time } from "./Time";
-import { useAtom } from "jotai";
-import { isUpdatingAtom } from "../utils/Store";
+import { useAtom, useAtomValue } from "jotai";
+import { isDarkAtom, isUpdatingAtom } from "../utils/Store";
 
 export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
   const [isUpdating, setIsUpdating] = useAtom(isUpdatingAtom);
+  const isDark = useAtomValue(isDarkAtom);
   const addToDoHandler = () => {
     addToDo(text, setText, setToDo);
     setText("");
@@ -28,13 +29,13 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
 
   return (
     <div className="w-full h-full mb-8">
-      <div className="flex w-[90%] mx-auto justify-between items-center">
+      <div className={`${isDark ? "text-white" : ""} flex w-[90%] mx-auto justify-between items-center`}>
         <Day />
         <Time />
       </div>
       <div className="mx-auto w-[70%] mt-4 flex gap-4">
         <button
-          className="px-6 py-2 text-sm font-[500] rounded-2xl bg-blue-300"
+          className="px-6 py-2 text-sm font-bold font-mono rounded-2xl bg-green-500 flex items-center justify-center"
           onClick={() => {
             isUpdating ? updateToDoHandler() : addToDoHandler();
           }}
