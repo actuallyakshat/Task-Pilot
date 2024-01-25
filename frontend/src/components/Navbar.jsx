@@ -1,18 +1,24 @@
 import { Link } from "react-router-dom";
-import { isDarkAtom, isLoggedInAtom } from "../utils/Store";
-import { useAtom } from "jotai";
+import { isDarkAtom, isLoggedInAtom, loadingAtom } from "../utils/Store";
+import { useAtom, useAtomValue } from "jotai";
 import { FaRegSun, FaRegMoon } from "react-icons/fa";
 import useSound from "use-sound";
 import switchsound from "../assets/sounds/switch.mp3";
 
 export const Navbar = () => {
   const [isDark, setIsDark] = useAtom(isDarkAtom);
+  const loading = useAtomValue(loadingAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [switchSound] = useSound(switchsound, { volume: 0.4 });
   const themeHandler = () => {
     switchSound();
     setIsDark(!isDark);
   };
+  const logoutHandler = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  };
+
   return (
     <nav
       className={`${
@@ -25,27 +31,54 @@ export const Navbar = () => {
             task pilot
           </h1>
         </Link>
-        <div className="flex gap-4 items-center justify-center">
-          <button
-            onClick={themeHandler}
-            className={`${
-              isDark ? "text-white" : ""
-            } transition-colors scale-125 mr-2`}
-          >
-            {isDark ? <FaRegMoon /> : <FaRegSun />}
-          </button>
-
-          <Link to="/login">
-            <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
-              Login
+        {loading ? (
+          <></>
+        ) : (
+          <div className="flex gap-4 items-center justify-center">
+            <button
+              onClick={themeHandler}
+              className={`${
+                isDark ? "text-white" : ""
+              } transition-colors scale-125 mr-2`}
+            >
+              {isDark ? <FaRegMoon /> : <FaRegSun />}
             </button>
-          </Link>
-          <Link to="/signup">
-            <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
-              Signup
-            </button>
-          </Link>
-        </div>
+            {!isLoggedIn && (
+              <div>
+                <Link to="/login">
+                  <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
+                    Login
+                  </button>
+                </Link>
+                <Link to="/signup">
+                  <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
+                    Signup
+                  </button>
+                </Link>
+              </div>
+            )}
+            {isLoggedIn && (
+              <>
+                <Link to="/list">
+                  <button
+                    className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md"
+                    onClick={logoutHandler}
+                  >
+                    To Do List
+                  </button>
+                </Link>
+                <Link to="/login">
+                  <button
+                    className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </button>
+                </Link>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );

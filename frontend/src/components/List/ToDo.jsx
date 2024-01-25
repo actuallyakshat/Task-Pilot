@@ -12,7 +12,7 @@ export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [checkTodoSound] = useSound(checkSound);
   const [uncheckTodoSound] = useSound(uncheckSound, { volume: 0.5 });
-  const [deleteTodoSound] = useSound(deleteSound, { volume: 0.5 });
+  const [deleteTodoSound] = useSound(deleteSound, { volume: 0.4});
 
   const handleCheckboxChange = () => {
     if (!isChecked) {
@@ -28,11 +28,18 @@ export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
     inputRef.current.focus();
   };
 
-  const deleteToDoHandler = () => {
-    deleteTodo();
-    deleteTodoSound();
-    toast.error("Deleted Task");
-  };
+const deleteToDoHandler = () => {
+  deleteTodo();
+  deleteTodoSound();
+  toast.error("Deleted Task", {
+    position: "bottom-center",
+    duration: 1500,
+    style: {
+      marginBottom: "20px",
+    },
+  });
+};
+  
 
   return (
     <div className="w-[70%] mx-auto bg-gray-50 my-4 flex items-center justify-between rounded-md shadow-md hover:bg-gray-200 transition-colors">

@@ -3,6 +3,25 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
+//authentication
+exports.auth = async (req, res) => {
+  try {
+    const token = req.header("Authorization").replace("Bearer ", "");
+    if (token) {
+      const decode = jwt.verify(token, process.env.JWT_SECRET);
+      res.json({
+        login: true,
+        data: decode,
+      });
+    } else {
+      res.json({
+        login: false,
+        data: "error",
+      });
+    }
+  } catch (error) {}
+};
+
 //signup
 exports.signup = async (req, res) => {
   try {
@@ -67,7 +86,7 @@ exports.login = async (req, res) => {
 
     if (await bcrypt.compare(password, user.password)) {
       let token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "3d",
+        expiresIn: "15d",
       });
 
       console.log("Login Successful");

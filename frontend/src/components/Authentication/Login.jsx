@@ -29,13 +29,13 @@ export const Login = () => {
     try {
       const data = await login(email, password, setUser);
       if (data.success == true) {
+        localStorage.setItem("token", data.token);
         setUser(data.data);
         setinvalidCredentials(false);
         setIsLoggedIn(true);
         navigate("/list");
       } else {
         setinvalidCredentials(true);
-        console.log("bad credentials");
       }
     } catch (error) {
       console.error("Error during login:", error.message);

@@ -1,13 +1,35 @@
 import axios from "axios";
 const baseUrl = "http://localhost:3000";
 
-const signup = async (name, email, password) => {
-  await axios
-    .post(`${baseUrl}/signup`, { name, email, password })
-    .then(({ data }) => {
-      console.log(data.name);
+//Authentication
+
+const authorization = async (token) => {
+  try {
+    const response = await axios.get(`${baseUrl}/auth`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
+
+const signup = async (name, email, password) => {
+  try {
+    const response = await axios.post(`${baseUrl}/signup`, {
+      name,
+      email,
+      password,
+    });
+    console.log(response.data.name);
+    return response.data;
+  } catch (error) {
+    console.error("Error occurred while creating account");
+  }
+};
+
 const login = async (email, password) => {
   try {
     const response = await axios.post(`${baseUrl}/login`, { email, password });
@@ -16,7 +38,6 @@ const login = async (email, password) => {
     if (!data.success) {
       console.log(data.message);
     } else {
-      localStorage.setItem("token", data.token);
       return data;
     }
   } catch (error) {
@@ -26,6 +47,7 @@ const login = async (email, password) => {
   }
 };
 
+//CRUD
 const getAllToDo = async (setToDo) => {
   await axios
     .get(`${baseUrl}`)
@@ -74,4 +96,12 @@ const deleteToDo = (_id, setToDo) => {
 };
 
 //editToDo
-export { getAllToDo, addToDo, updateToDo, deleteToDo, signup, login };
+export {
+  getAllToDo,
+  addToDo,
+  updateToDo,
+  deleteToDo,
+  signup,
+  login,
+  authorization,
+};
