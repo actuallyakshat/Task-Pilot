@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { InputBar } from "./InputBar";
 import { ToDo } from "./ToDo";
-import { deleteToDo, getAllToDo } from "../utils/HandleApi";
+import { deleteToDo, getAllToDo } from "../../utils/HandleApi";
 import { useSetAtom } from "jotai";
-import { isUpdatingAtom } from "../utils/Store";
+import { isUpdatingAtom } from "../../utils/Store";
 
 export const ListContainer = () => {
   const inputRef = useRef(null);
@@ -23,7 +23,6 @@ export const ListContainer = () => {
     setIsUpdating(true);
   };
 
-  console.log("toDo in ListContainer:", typeof toDo, "value of todo =", toDo);
 
   return (
     <div className={"mx-auto px-4 my-12 md:min-h-[600px] w-[60%] h-full"}>

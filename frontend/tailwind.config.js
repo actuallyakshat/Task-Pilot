@@ -5,6 +5,13 @@ export default {
     extend: {
       fontFamily: {
         Poppins: ["Poppins", "sans-serif"],
+        Rubik: ["Rubik", "sans-serif"],
+      },
+      backgroundImage: {
+        hero: "url('/src/assets/images/hero.jpg')",
+      },
+      colors: {
+        dark: "#0f0f0f",
       },
     },
   },

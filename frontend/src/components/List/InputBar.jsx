@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import { addToDo, updateToDo } from "../utils/HandleApi";
+import { addToDo, updateToDo } from "../../utils/HandleApi";
 import { Day } from "./Day";
 import { Time } from "./Time";
 import { useAtom, useAtomValue } from "jotai";
-import { isDarkAtom, isUpdatingAtom } from "../utils/Store";
+import { isDarkAtom, isUpdatingAtom } from "../../utils/Store";
 
 export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
   const [isUpdating, setIsUpdating] = useAtom(isUpdatingAtom);
@@ -29,7 +29,11 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
 
   return (
     <div className="w-full h-full mb-8">
-      <div className={`${isDark ? "text-white" : ""} flex w-[90%] mx-auto justify-between items-center`}>
+      <div
+        className={`${
+          isDark ? "text-white" : ""
+        } flex w-[90%] mx-auto justify-between items-center`}
+      >
         <Day />
         <Time />
       </div>

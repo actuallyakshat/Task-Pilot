@@ -1,15 +1,17 @@
 import { Navbar } from "./components/Navbar";
-import { ListContainer } from "./components/ListContainer";
+import { ListContainer } from "./components/List/ListContainer";
 import { Route, Routes } from "react-router-dom";
-import { Login } from "./components/login";
-import { Signup } from "./components/Signup";
+import { Login } from "./components/Authentication/Login";
+import { Signup } from "./components/Authentication/Signup";
 import { PageNotFound } from "./components/PageNotFound";
 import { isDarkAtom } from "./utils/Store";
 import { useAtomValue } from "jotai";
 import { Toaster } from "react-hot-toast";
+import { Home } from "./components/Home/Home";
 
 function App() {
   const isDark = useAtomValue(isDarkAtom);
+
   return (
     <div className="min-h-screen h-full w-full flex flex-col">
       <Toaster
@@ -17,14 +19,14 @@ function App() {
         toastOptions={{
           duration: 1000,
           style: {
-            marginBottom: "20px"
+            marginBottom: "20px",
           },
         }}
       />
       <Navbar />
-      <div className={`${isDark ? "bg-black" : ""} flex-1`}>
+      <div className={`${isDark ? "bg-dark" : ""} flex-1 flex transition-colors`}>
         <Routes>
-          <Route path="/" element={<ListContainer />}></Route>
+          <Route index path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/list" element={<ListContainer />} />

@@ -8,8 +8,13 @@ const {
   deleteToDo,
   updateToDo,
 } = require("../controllers/ToDoController");
+const { signup, login } = require("../controllers/Authentication");
 
-//routes
+//Auth Routes
+router.post("/signup", signup);
+router.post("/login", login);
+
+//CRUD routes
 router.get("/", getToDo);
 router.post("/create-todo", createToDo);
 router.put("/update-todo", updateToDo);

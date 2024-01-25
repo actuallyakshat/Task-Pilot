@@ -4,9 +4,9 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useSound from "use-sound";
-import checkSound from "../assets/sounds/check.mp3";
-import uncheckSound from "../assets/sounds/uncheck.mp3";
-import deleteSound from "../assets/sounds/deleteSound.mp3";
+import checkSound from "../../assets/sounds/check.mp3";
+import uncheckSound from "../../assets/sounds/uncheck.mp3";
+import deleteSound from "../../assets/sounds/deleteSound.mp3";
 
 export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
   const [isChecked, setIsChecked] = useState(false);
