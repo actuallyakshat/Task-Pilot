@@ -97,16 +97,6 @@ const updateToDo = async (
 };
 
 const deleteToDo = (userid, todoid, setToDo) => {
-  console.log("User ki id hai :", userid);
-  console.log("Todo ki id hai :", todoid);
-  // axios
-  //   .delete(`${baseUrl}/delete-todo`, { userid: userid, todoid: todoid })
-  //   .then(() => {
-  //     getAllToDo(setToDo);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error while deleting todo:", error);
-  //   });
   axios
     .delete(`${baseUrl}/delete-todo`, {
       data: { userid: userid, todoid: todoid },
@@ -119,6 +109,17 @@ const deleteToDo = (userid, todoid, setToDo) => {
     });
 };
 
+//updating status of todos
+const updateState = (todoid) => {
+  axios
+    .put(`${baseUrl}/update-state`, { todoid: todoid })
+    .then(() => console.log("State of todo updated successfully"))
+    .catch((error) => {
+      console.log("Error while updating the state of todo.");
+      console.error(error);
+    });
+};
+
 //editToDo
 export {
   getAllToDo,
@@ -128,4 +129,5 @@ export {
   signup,
   login,
   authorization,
+  updateState,
 };

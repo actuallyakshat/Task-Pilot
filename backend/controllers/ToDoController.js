@@ -1,7 +1,6 @@
 const ToDo = require("../models/ToDoModel");
 const User = require("../models/User");
 //fetch all todos
-
 exports.getToDo = async (req, res) => {
   try {
     const userid = req.query.userid;
@@ -82,6 +81,25 @@ exports.deleteToDo = async (req, res) => {
     await User.updateOne({ _id: userid }, { $pull: { todos: todoid } });
   } catch (error) {
     console.log("Error occurred while deleting Todo:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+//remember the state of the items
+exports.updateState = async (req, res) => {
+  try {
+    const todoid = req.body.todoid;
+    const todo = await ToDo.findOne({ _id: todoid });
+
+    if (todo) {
+      todo.completed = !todo.completed;
+      await todo.save();
+      res.json({ success: true, todo });
+    } else {
+      res.status(404).json({ success: false, error: "Todo not found" });
+    }
+  } catch (error) {
+    console.log("Error occurred while updating the state of todo:", error);
     res.status(500).send("Internal Server Error");
   }
 };

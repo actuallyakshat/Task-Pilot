@@ -8,13 +8,21 @@ import checkSound from "../../assets/sounds/check.mp3";
 import uncheckSound from "../../assets/sounds/uncheck.mp3";
 import deleteSound from "../../assets/sounds/deleteSound.mp3";
 
-export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
-  const [isChecked, setIsChecked] = useState(false);
+export const ToDo = ({
+  isCompleted,
+  text,
+  updateTodo,
+  deleteTodo,
+  updateState,
+  inputRef,
+}) => {
+  const [isChecked, setIsChecked] = useState(isCompleted);
   const [checkTodoSound] = useSound(checkSound);
   const [uncheckTodoSound] = useSound(uncheckSound, { volume: 0.5 });
-  const [deleteTodoSound] = useSound(deleteSound, { volume: 0.4});
+  const [deleteTodoSound] = useSound(deleteSound, { volume: 0.4 });
 
   const handleCheckboxChange = () => {
+    updateState();
     if (!isChecked) {
       checkTodoSound();
     } else {
@@ -28,18 +36,17 @@ export const ToDo = ({ text, updateTodo, deleteTodo, inputRef }) => {
     inputRef.current.focus();
   };
 
-const deleteToDoHandler = () => {
-  deleteTodo();
-  deleteTodoSound();
-  toast.error("Deleted Task", {
-    position: "bottom-center",
-    duration: 1500,
-    style: {
-      marginBottom: "20px",
-    },
-  });
-};
-  
+  const deleteToDoHandler = () => {
+    deleteTodo();
+    deleteTodoSound();
+    toast.error("Deleted Task", {
+      position: "bottom-center",
+      duration: 1500,
+      style: {
+        marginBottom: "20px",
+      },
+    });
+  };
 
   return (
     <div className="w-[70%] mx-auto bg-gray-50 my-4 flex items-center justify-between rounded-md shadow-md hover:bg-gray-200 transition-colors">
@@ -70,9 +77,10 @@ const deleteToDoHandler = () => {
 };
 
 ToDo.propTypes = {
+  isCompleted: PropTypes.bool,
   text: PropTypes.string,
   updateTodo: PropTypes.func,
   deleteTodo: PropTypes.func,
-  focusInput: PropTypes.func,
+  updateState: PropTypes.func,
   inputRef: PropTypes.object,
 };

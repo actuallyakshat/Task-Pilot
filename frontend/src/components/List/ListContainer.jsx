@@ -1,8 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { InputBar } from "./InputBar";
 import { ToDo } from "./ToDo";
-import { authorization, deleteToDo, getAllToDo } from "../../utils/HandleApi";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
+
+import {
+  authorization,
+  deleteToDo,
+  getAllToDo,
+  updateState,
+} from "../../utils/HandleApi";
+
 import {
   isDarkAtom,
   isLoggedInAtom,
@@ -10,7 +18,6 @@ import {
   loadingAtom,
   userAtom,
 } from "../../utils/Store";
-import { useNavigate } from "react-router-dom";
 
 export const ListContainer = () => {
   const inputRef = useRef(null);
@@ -23,6 +30,7 @@ export const ListContainer = () => {
   const setLoading = useSetAtom(loadingAtom);
   const [user, setUser] = useAtom(userAtom);
   const isDark = useAtomValue(isDarkAtom);
+
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
@@ -30,13 +38,11 @@ export const ListContainer = () => {
         const auth = await authorization(token);
         // console.log(auth);
         if (auth.data.login) {
-          console.log(auth.data.data);
           setUser(auth.data.data);
           setIsLoggedIn(true);
           setLoading(false);
           // eslint-disable-next-line react-hooks/exhaustive-deps
           const id = auth.data.data.id;
-          // console.log("User is", user);
           getAllToDo(setToDo, id);
         } else {
           console.log("Inside list else");
@@ -67,7 +73,7 @@ export const ListContainer = () => {
               isDark ? "text-white" : ""
             } font-bold text-4xl font-Rubik text-center mb-6`}
           >
-            Hey {user.name}, let's get to work
+            Hey {user.name}, let&apos;s get to work
           </p>
           <InputBar
             text={text}
@@ -80,9 +86,11 @@ export const ListContainer = () => {
             <ToDo
               key={item._id}
               value={text}
+              isCompleted={item.completed}
               text={item.text}
               updateTodo={() => updateTodo(item._id, item.text)}
               deleteTodo={() => deleteToDo(user.id, item._id, setToDo)}
+              updateState={() => updateState(item._id)}
               inputRef={inputRef}
             />
           ))}
