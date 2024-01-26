@@ -36,7 +36,8 @@ export const ListContainer = () => {
           setUser(auth.data.data);
           setIsLoggedIn(true);
           setLoading(false);
-          getAllToDo(setToDo);
+          const id = auth.data.data.id;
+          getAllToDo(setToDo, id);
         } else {
           console.log("Inside list else");
           setLoading(false);
@@ -61,7 +62,11 @@ export const ListContainer = () => {
     <div className={"mx-auto px-4 my-12 md:min-h-[600px] w-[60%] h-full"}>
       {isLoggedIn && (
         <>
-          <p className={`${isDark ? "text-white" : "" } font-bold text-4xl font-Rubik text-center mb-6`}>
+          <p
+            className={`${
+              isDark ? "text-white" : ""
+            } font-bold text-4xl font-Rubik text-center mb-6`}
+          >
             Hey {user.name}, let's get to work
           </p>
           <InputBar

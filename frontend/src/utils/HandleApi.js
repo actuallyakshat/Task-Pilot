@@ -48,9 +48,9 @@ const login = async (email, password) => {
 };
 
 //CRUD
-const getAllToDo = async (setToDo) => {
+const getAllToDo = async (setToDo, userid) => {
   await axios
-    .get(`${baseUrl}`)
+    .get(`${baseUrl}`, {params : {userid: userid}})
     .then(({ data }) => {
       setToDo(data);
     })

@@ -1,10 +1,21 @@
 const ToDo = require("../models/ToDoModel");
-
+const User = require("../models/User");
 //fetch all todos
+
 exports.getToDo = async (req, res) => {
   try {
-    const todos = await ToDo.find();
-    res.send(todos);
+    const userid = req.query.userid;
+    console.log(userid);
+    const user = await User.findOne({ _id: userid });
+    console.log(user);
+    const todos = await ToDo.find({
+      _id: { $in: user.todos },
+    });
+    if (todos) {
+      res.send(todos);
+    } else {
+      res.json({ msg: "No todos found" });
+    }
   } catch (error) {
     console.log("Error occoured while fetching Todos:", error);
   }
@@ -41,7 +52,6 @@ exports.updateToDo = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
 
 //delete todo
 exports.deleteToDo = async (req, res) => {
