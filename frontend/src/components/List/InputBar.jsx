@@ -3,13 +3,15 @@ import { addToDo, updateToDo } from "../../utils/HandleApi";
 import { Day } from "./Day";
 import { Time } from "./Time";
 import { useAtom, useAtomValue } from "jotai";
-import { isDarkAtom, isUpdatingAtom } from "../../utils/Store";
+import { isDarkAtom, isUpdatingAtom, userAtom } from "../../utils/Store";
 
 export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
   const [isUpdating, setIsUpdating] = useAtom(isUpdatingAtom);
   const isDark = useAtomValue(isDarkAtom);
+  const User = useAtomValue(userAtom);
   const addToDoHandler = () => {
-    addToDo(text, setText, setToDo);
+    const userid = User.id;
+    addToDo(text, userid, setText, setToDo);
     setText("");
   };
 

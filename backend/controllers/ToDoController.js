@@ -12,6 +12,7 @@ exports.getToDo = async (req, res) => {
       _id: { $in: user.todos },
     });
     if (todos) {
+      console.log(todos);
       res.send(todos);
     } else {
       res.json({ msg: "No todos found" });
@@ -24,13 +25,19 @@ exports.getToDo = async (req, res) => {
 //create todo
 exports.createToDo = async (req, res) => {
   try {
-    const { text } = req.body;
-    await ToDo.create({ text }).then((data) => {
-      console.log("Added Todo Sucessfully: ", data);
-      res.send(data);
-    });
+    const userid = req.body.userid;
+    const text = req.body.text;
+
+    const todo = await ToDo.create({ text: text, completed: false });
+
+    console.log("Added Todo Successfully to Todos collection:", todo);
+
+    await User.updateOne({ _id: userid }, { $push: { todos: todo._id } });
+    
+    res.status(201).json(todo); // Sending a 201 status code for successful creation
   } catch (error) {
-    console.log("Error occoured while creating Todo:", error);
+    console.error("Error occurred while creating Todo:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

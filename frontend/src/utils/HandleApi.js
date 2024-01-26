@@ -50,21 +50,22 @@ const login = async (email, password) => {
 //CRUD
 const getAllToDo = async (setToDo, userid) => {
   await axios
-    .get(`${baseUrl}`, {params : {userid: userid}})
+    .get(`${baseUrl}`, { params: { userid: userid } })
     .then(({ data }) => {
       setToDo(data);
+      console.log(data);
     })
     .catch((error) => {
       console.error("Error while getting todos:", error);
     });
 };
 
-const addToDo = async (text, setText, setToDo) => {
+const addToDo = async (text, userid, setText, setToDo) => {
   await axios
-    .post(`${baseUrl}/create-todo`, { text })
+    .post(`${baseUrl}/create-todo`, { text: text, userid: userid })
     .then(() => {
       setText("");
-      getAllToDo(setToDo);
+      getAllToDo(setToDo, userid);
     })
     .catch((error) => {
       console.error("Error while adding todo:", error);
