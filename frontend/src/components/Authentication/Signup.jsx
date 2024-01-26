@@ -115,7 +115,14 @@ export const Signup = () => {
             Your journey to a more organized and focused life begins here.
           </p>
         </div>
-        <div className="flex flex-col gap-5 mb-8">
+        <div
+          className="flex flex-col gap-5 mb-8"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              signupHandler();
+            }
+          }}
+        >
           <input
             type="text"
             id="text"
@@ -183,6 +190,11 @@ export const Signup = () => {
               : "bg-gray-600"
           } px-4 py-2  font-semibold rounded-3xl tracking-wider text-white`}
           onClick={signupHandler}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              signupHandler;
+            }
+          }}
         >
           Register
         </button>

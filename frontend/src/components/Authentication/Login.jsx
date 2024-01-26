@@ -49,7 +49,14 @@ export const Login = () => {
           <h1 className="text-4xl font-bold mb-2">Sign in</h1>
           <p className="font-medium">Stay productive in a fast-paced world</p>
         </div>
-        <div className="flex flex-col gap-5 mb-8">
+        <div
+          className="flex flex-col gap-5 mb-8"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              loginHandler();
+            }
+          }}
+        >
           <input
             type="email"
             id="email"
@@ -66,7 +73,7 @@ export const Login = () => {
               required
               className="p-2 rounded-md border w-full border-black/70 focus:outline-none"
               onChange={passwordHandler}
-            />{" "}
+            />
             <button
               className="absolute right-3 top-3"
               onClick={showPasswordHandler}
@@ -81,7 +88,6 @@ export const Login = () => {
         <div className="w-full flex flex-col gap-2">
           <button
             disabled={!email || !password}
-            type="submit"
             className={`${
               email && password ? "bg-green-700" : "bg-gray-600"
             } px-4 py-2  font-semibold rounded-3xl tracking-wider text-white`}

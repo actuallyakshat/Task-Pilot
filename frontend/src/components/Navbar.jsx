@@ -60,10 +60,7 @@ export const Navbar = () => {
             {isLoggedIn && (
               <>
                 <Link to="/list">
-                  <button
-                    className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md"
-                    onClick={logoutHandler}
-                  >
+                  <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
                     To Do List
                   </button>
                 </Link>
