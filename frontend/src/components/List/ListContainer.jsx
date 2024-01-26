@@ -23,20 +23,20 @@ export const ListContainer = () => {
   const setLoading = useSetAtom(loadingAtom);
   const [user, setUser] = useAtom(userAtom);
   const isDark = useAtomValue(isDarkAtom);
-
   useEffect(() => {
-    console.log(user);
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       if (token) {
         const auth = await authorization(token);
-
+        // console.log(auth);
         if (auth.data.login) {
           console.log(auth.data.data);
           setUser(auth.data.data);
           setIsLoggedIn(true);
           setLoading(false);
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           const id = auth.data.data.id;
+          // console.log("User is", user);
           getAllToDo(setToDo, id);
         } else {
           console.log("Inside list else");
@@ -82,7 +82,7 @@ export const ListContainer = () => {
               value={text}
               text={item.text}
               updateTodo={() => updateTodo(item._id, item.text)}
-              deleteTodo={() => deleteToDo(item._id, setToDo)}
+              deleteTodo={() => deleteToDo(user.id, item._id, setToDo)}
               inputRef={inputRef}
             />
           ))}

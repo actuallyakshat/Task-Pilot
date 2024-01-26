@@ -5,20 +5,25 @@ const User = require("../models/User");
 exports.getToDo = async (req, res) => {
   try {
     const userid = req.query.userid;
-    console.log(userid);
+
     const user = await User.findOne({ _id: userid });
-    console.log(user);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
     const todos = await ToDo.find({
       _id: { $in: user.todos },
     });
-    if (todos) {
-      console.log(todos);
+
+    if (todos.length > 0) {
       res.send(todos);
     } else {
-      res.json({ msg: "No todos found" });
+      res.send([]);
     }
   } catch (error) {
-    console.log("Error occoured while fetching Todos:", error);
+    console.log("Error occurred while fetching Todos:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -33,7 +38,7 @@ exports.createToDo = async (req, res) => {
     console.log("Added Todo Successfully to Todos collection:", todo);
 
     await User.updateOne({ _id: userid }, { $push: { todos: todo._id } });
-    
+
     res.status(201).json(todo); // Sending a 201 status code for successful creation
   } catch (error) {
     console.error("Error occurred while creating Todo:", error);
@@ -63,13 +68,18 @@ exports.updateToDo = async (req, res) => {
 //delete todo
 exports.deleteToDo = async (req, res) => {
   try {
-    const { _id } = req.query; // Change to req.query
-    await ToDo.findByIdAndDelete(_id)
+    const { userid, todoid } = req.body;
+    // const userid = req.userid;
+    // const todoid = req.todoid;
+    console.log("User id :", userid);
+    console.log("todo id: ", todoid);
+    await ToDo.findByIdAndDelete(todoid)
       .then(() => res.status(201).send("Deleted Successfully..."))
       .catch((error) => {
         console.log("Error while deleting Todo:", error);
         res.status(500).send("Internal Server Error");
       });
+    await User.updateOne({ _id: userid }, { $pull: { todos: todoid } });
   } catch (error) {
     console.log("Error occurred while deleting Todo:", error);
     res.status(500).send("Internal Server Error");

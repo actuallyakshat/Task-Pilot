@@ -49,14 +49,18 @@ const login = async (email, password) => {
 
 //CRUD
 const getAllToDo = async (setToDo, userid) => {
+  if (!userid) {
+    console.error("User ID is not provided");
+    return;
+  }
   await axios
     .get(`${baseUrl}`, { params: { userid: userid } })
     .then(({ data }) => {
       setToDo(data);
-      console.log(data);
     })
     .catch((error) => {
       console.error("Error while getting todos:", error);
+      throw error;
     });
 };
 
@@ -72,12 +76,19 @@ const addToDo = async (text, userid, setText, setToDo) => {
     });
 };
 
-const updateToDo = async (ToDoId, text, setText, setToDo, setIsUpdating) => {
+const updateToDo = async (
+  ToDoId,
+  userid,
+  text,
+  setText,
+  setToDo,
+  setIsUpdating
+) => {
   await axios
     .put(`${baseUrl}/update-todo`, { _id: ToDoId, text: text })
     .then(() => {
       setIsUpdating(false);
-      getAllToDo(setToDo);
+      getAllToDo(setToDo, userid);
       setText("");
     })
     .catch((error) => {
@@ -85,11 +96,23 @@ const updateToDo = async (ToDoId, text, setText, setToDo, setIsUpdating) => {
     });
 };
 
-const deleteToDo = (_id, setToDo) => {
+const deleteToDo = (userid, todoid, setToDo) => {
+  console.log("User ki id hai :", userid);
+  console.log("Todo ki id hai :", todoid);
+  // axios
+  //   .delete(`${baseUrl}/delete-todo`, { userid: userid, todoid: todoid })
+  //   .then(() => {
+  //     getAllToDo(setToDo);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error while deleting todo:", error);
+  //   });
   axios
-    .delete(`${baseUrl}/delete-todo`, { params: { _id } })
+    .delete(`${baseUrl}/delete-todo`, {
+      data: { userid: userid, todoid: todoid },
+    })
     .then(() => {
-      getAllToDo(setToDo);
+      getAllToDo(setToDo, userid);
     })
     .catch((error) => {
       console.error("Error while deleting todo:", error);

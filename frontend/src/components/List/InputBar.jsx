@@ -9,6 +9,7 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
   const [isUpdating, setIsUpdating] = useAtom(isUpdatingAtom);
   const isDark = useAtomValue(isDarkAtom);
   const User = useAtomValue(userAtom);
+  const userid = User.id;
   const addToDoHandler = () => {
     const userid = User.id;
     addToDo(text, userid, setText, setToDo);
@@ -16,7 +17,7 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
   };
 
   const updateToDoHandler = () => {
-    updateToDo(toDoId, text, setText, setToDo, setIsUpdating);
+    updateToDo(toDoId, userid, text, setText, setToDo, setIsUpdating);
   };
 
   const handleKeyDown = (event) => {

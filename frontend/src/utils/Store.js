@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 
 const isUpdatingAtom = atom(false);
-const isDarkAtom = atom(true);
-const userAtom = atom("");
+const isDarkAtom = atom(false);
+const userAtom = atom({});
 const isLoggedInAtom = atom(false);
 const loadingAtom = atom(true);
 
