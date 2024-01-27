@@ -78,7 +78,7 @@ export const ListContainer = () => {
           <p
             className={`${
               isDark ? "text-white" : ""
-            } font-bold text-2xl tracking-wider w-full md:text-4xl font-Rubik md:tracking-widest text-center mb-7`}
+            } font-bold text-2xl  w-full md:text-4xl font-Rubik text-center mb-7`}
           >
             Hey {user.name.split(" ")[0]}, let&apos;s get to work!
           </p>
