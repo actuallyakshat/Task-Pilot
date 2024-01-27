@@ -39,7 +39,7 @@ export const Day = () => {
 
   return (
     <div>
-      <h3 className="font-Poppins font-[700] text-[2.5rem]">
+      <h3 className="text-2xl font-Poppins font-[700] md:text-[2.5rem]">
         {dayOfMonth}
         <sup>{daySuffix} </sup>
         {currentMonth}

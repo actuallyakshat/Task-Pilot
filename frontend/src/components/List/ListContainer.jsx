@@ -40,8 +40,11 @@ export const ListContainer = () => {
         if (auth.data.login) {
           setUser(auth.data.data);
           setIsLoggedIn(true);
+
           setLoading(false);
+
           // eslint-disable-next-line react-hooks/exhaustive-deps
+
           const id = auth.data.data.id;
           getAllToDo(setToDo, id);
         } else {
@@ -65,16 +68,21 @@ export const ListContainer = () => {
   };
 
   return (
-    <div className={"mx-auto px-4 my-12 md:min-h-[600px] w-[60%] h-full"}>
+    <div
+      className={
+        "mx-auto my-8 px-6 w-fit md:my-12 md:min-h-[600px] md:w-[60%] flex flex-col h-full"
+      }
+    >
       {isLoggedIn && (
         <>
           <p
             className={`${
               isDark ? "text-white" : ""
-            } font-bold text-4xl font-Rubik text-center mb-6`}
+            } font-bold text-2xl tracking-wider w-full md:text-4xl font-Rubik md:tracking-widest text-center mb-7`}
           >
-            Hey {user.name}, let&apos;s get to work
+            Hey {user.name.split(" ")[0]}, let&apos;s get to work!
           </p>
+
           <InputBar
             text={text}
             setText={setText}

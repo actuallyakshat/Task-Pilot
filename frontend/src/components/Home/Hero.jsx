@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
-    <div className="h-[calc(100vh-64px)] bg-hero bg-cover bg-no-repeat font-Rubik snap-start">
-      <div className="ml-28 mt-40">
+    <div className="h-full w-full bg-hero bg-cover bg-no-repeat font-Rubik">
+      <div className="ml-28 mt-40 mr-28 mb-20">
         <h1 className=" font-bold text-6xl w-[20ch] mb-2">
           A Minimal To Do List & Accountability App
         </h1>

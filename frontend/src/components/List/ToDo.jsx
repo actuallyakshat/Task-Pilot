@@ -7,6 +7,8 @@ import useSound from "use-sound";
 import checkSound from "../../assets/sounds/check.mp3";
 import uncheckSound from "../../assets/sounds/uncheck.mp3";
 import deleteSound from "../../assets/sounds/deleteSound.mp3";
+import { isDarkAtom } from "../../utils/Store";
+import { useAtomValue } from "jotai";
 
 export const ToDo = ({
   isCompleted,
@@ -20,6 +22,7 @@ export const ToDo = ({
   const [checkTodoSound] = useSound(checkSound);
   const [uncheckTodoSound] = useSound(uncheckSound, { volume: 0.5 });
   const [deleteTodoSound] = useSound(deleteSound, { volume: 0.4 });
+  const isDark = useAtomValue(isDarkAtom);
 
   const handleCheckboxChange = () => {
     updateState();
@@ -49,9 +52,13 @@ export const ToDo = ({
   };
 
   return (
-    <div className="w-[70%] mx-auto bg-gray-50 my-4 flex items-center justify-between rounded-md shadow-md hover:bg-gray-200 transition-colors">
+    <div
+      className={`${
+        isDark ? "bg-black/20 text-white hover:bg-black/60" : "bg-gray-50/80 hover:bg-gray-200"
+      } w-full md:w-[70%] mx-auto my-2 flex items-center font-[600] font-mono text-lg justify-between rounded-md shadow-md  transition-colors`}
+    >
       <div
-        className="flex flex-grow items-center h-full p-4 gap-4 cursor-pointer"
+        className="flex flex-grow items-center h-full p-4 gap-3 cursor-pointer"
         onClick={handleCheckboxChange}
       >
         <input

@@ -16,7 +16,7 @@ export const Time = () => {
   };
   return (
     <div>
-      <h3 className="font-Poppins font-[700] text-[2.5rem]">
+      <h3 className="font-Poppins font-[700] text-2xl md:text-[2.5rem]">
         {formattedTime()}
       </h3>
     </div>

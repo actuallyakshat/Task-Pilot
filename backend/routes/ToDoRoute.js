@@ -9,7 +9,13 @@ const {
   updateToDo,
   updateState,
 } = require("../controllers/ToDoController");
-const { signup, login, auth } = require("../controllers/Authentication");
+
+const {
+  signup,
+  login,
+  auth,
+  sendOTP,
+} = require("../controllers/Authentication");
 
 //Auth Routes
 router.post("/signup", signup);
@@ -21,6 +27,7 @@ router.get("/", getToDo);
 router.post("/create-todo", createToDo);
 router.put("/update-todo", updateToDo);
 router.delete("/delete-todo", deleteToDo);
-router.put("/update-state", updateState)
+router.put("/update-state", updateState);
+router.post("/send-otp", sendOTP);
 
 module.exports = router;

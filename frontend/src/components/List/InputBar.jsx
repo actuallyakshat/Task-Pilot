@@ -31,16 +31,18 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
   };
 
   return (
-    <div className="w-full h-full mb-8">
+    <div className="h-full md:w-full w-[90vw] px-2 mb-8 flex flex-col">
       <div
         className={`${
           isDark ? "text-white" : ""
-        } flex w-[90%] mx-auto justify-between items-center`}
+        } flex w-full md:w-[90%] mx-auto justify-between items-center`}
       >
-        <Day />
-        <Time />
+        <div className="w-full flex justify-between mb-4">
+          <Day />
+          <Time />
+        </div>
       </div>
-      <div className="mx-auto w-[70%] mt-4 flex gap-4">
+      <div className="mx-auto w-full md:w-[70%] mt-4 flex gap-4">
         <button
           className="px-6 py-2 text-sm font-bold font-mono rounded-2xl bg-green-500 flex items-center justify-center"
           onClick={() => {

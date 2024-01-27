@@ -4,6 +4,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { FaRegSun, FaRegMoon } from "react-icons/fa";
 import useSound from "use-sound";
 import switchsound from "../assets/sounds/switch.mp3";
+import { Logout } from "./Authentication/Logout";
 
 export const Navbar = () => {
   const [isDark, setIsDark] = useAtom(isDarkAtom);
@@ -14,18 +15,15 @@ export const Navbar = () => {
     switchSound();
     setIsDark(!isDark);
   };
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("token");
-  };
+
 
   return (
     <nav
       className={`${
-        isDark ? "bg-dark text-white" : ""
-      } flex h-[70px] justify-center items-center text-black/80 transition-colors`}
+        isDark ? "bg-dark text-white" : "bg-light"
+      } flex h-[70px] justify-center items-center text-black/90 transition-colors`}
     >
-      <div className="w-[70%] h-full flex items-center justify-between">
+      <div className="w-full px-5 md:w-[70%] h-full flex items-center justify-between">
         <Link to="/">
           <h1 className="font-Poppins uppercase text-xl font-[700]">
             task pilot
@@ -34,12 +32,12 @@ export const Navbar = () => {
         {loading ? (
           <></>
         ) : (
-          <div className="flex gap-4 items-center justify-center">
+          <div className="flex gap-4 md:gap-4 items-center justify-center">
             <button
               onClick={themeHandler}
               className={`${
                 isDark ? "text-white" : ""
-              } transition-colors scale-125 mr-2`}
+              } transition-colors scale-125 mr-2 order-last md:order-first`}
             >
               {isDark ? <FaRegMoon /> : <FaRegSun />}
             </button>
@@ -50,7 +48,7 @@ export const Navbar = () => {
                     Login
                   </button>
                 </Link>
-                <Link to="/signup">
+                <Link to="/signup" className="sm:hidden md:inline">
                   <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
                     Signup
                   </button>
@@ -65,12 +63,13 @@ export const Navbar = () => {
                   </button>
                 </Link>
                 <Link to="/login">
-                  <button
+                  <Logout />
+                  {/* <button
                     className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md"
                     onClick={logoutHandler}
                   >
                     Logout
-                  </button>
+                  </button> */}
                 </Link>
               </>
             )}

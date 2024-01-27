@@ -11,7 +11,8 @@ export default {
         hero: "url('/src/assets/images/hero.jpg')",
       },
       colors: {
-        dark: "#0f0f0f",
+        light: "#EEEDEB",
+        dark: "#1B2430",
       },
     },
   },

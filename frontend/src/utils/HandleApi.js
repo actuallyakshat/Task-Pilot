@@ -30,19 +30,23 @@ const signup = async (name, email, password) => {
   }
 };
 
-const login = async (email, password) => {
+const login = async (email, password, setError) => {
   try {
     const response = await axios.post(`${baseUrl}/login`, { email, password });
     const data = response.data;
-
     if (!data.success) {
-      console.log(data.message);
+      setError(data.message);
+      return;
     } else {
       return data;
     }
   } catch (error) {
+    console.log("Error occoured while logging in:", error);
     return {
-      success: false,
+      data: {
+        success: false,
+        message: "This User is not registered",
+      },
     };
   }
 };
@@ -111,13 +115,26 @@ const deleteToDo = (userid, todoid, setToDo) => {
 
 //updating status of todos
 const updateState = (todoid) => {
-  axios
-    .put(`${baseUrl}/update-state`, { todoid: todoid })
-    .then(() => console.log("State of todo updated successfully"))
-    .catch((error) => {
-      console.log("Error while updating the state of todo.");
-      console.error(error);
+  axios.put(`${baseUrl}/update-state`, { todoid: todoid }).catch((error) => {
+    console.log("Error while updating the state of todo.");
+    console.error(error);
+  });
+};
+
+const sendOtp = async (email, name, otp) => {
+  try {
+    const response = await axios.post(`${baseUrl}/send-otp`, {
+      email,
+      name,
+      otp,
     });
+    return response;
+  } catch (error) {
+    console.log("Error occoured while sending OTP", error);
+    return {
+      success: error,
+    };
+  }
 };
 
 //editToDo
@@ -130,4 +147,5 @@ export {
   login,
   authorization,
   updateState,
+  sendOtp,
 };

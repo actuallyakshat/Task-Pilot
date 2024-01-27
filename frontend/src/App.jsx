@@ -40,7 +40,7 @@ function App() {
       <Toaster />
       <Navbar />
       <div
-        className={`${isDark ? "bg-dark" : ""} flex-1 flex transition-colors`}
+        className={`${isDark ? "bg-dark" : "bg-light"} flex-1 flex transition-colors`}
       >
         <Routes>
           <Route index path="/" element={<Home />}></Route>

@@ -12,7 +12,7 @@ export const Login = () => {
   const setUser = useSetAtom(userAtom);
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
   const navigate = useNavigate();
-  const [invalidCredentials, setinvalidCredentials] = useState(false);
+  const [error, setError] = useState("");
 
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -27,29 +27,28 @@ export const Login = () => {
 
   const loginHandler = async () => {
     try {
-      const data = await login(email, password, setUser);
-      if (data.success == true) {
-        localStorage.setItem("token", data.token);
-        setUser(data.data);
-        setinvalidCredentials(false);
-        setIsLoggedIn(true);
-        navigate("/list");
-      } else {
-        setinvalidCredentials(true);
+      const data = await login(email, password, setError);
+      if (data) {
+        if (data.success == true) {
+          localStorage.setItem("token", data.token);
+          setUser(data.data);
+          setIsLoggedIn(true);
+          navigate("/list");
+        }
       }
     } catch (error) {
-      console.error("Error during login:", error.message);
+      console.error("Error during login:", error);
     }
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center">
-      <div className="bg-white w-[420px] h-fit px-6 py-8 -translate-y-12 rounded-lg shadow-2xl flex flex-col">
+    <div className="flex-1 flex items-center justify-center px-8 md:px-0">
+      <div className="bg-white w-[420px] h-fit px-6 py-8 -translate-y-8 md:-translate-y-12 rounded-lg shadow-2xl flex flex-col">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Sign in</h1>
           <p className="font-medium">Stay productive in a fast-paced world</p>
         </div>
-        <div
+        <form
           className="flex flex-col gap-5 mb-8"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -75,16 +74,17 @@ export const Login = () => {
               onChange={passwordHandler}
             />
             <button
+              type="button"
               className="absolute right-3 top-3"
               onClick={showPasswordHandler}
             >
               {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
             </button>
           </div>
-          {invalidCredentials && (
-            <p className="text-red-500 font-semibold">Invalid Credentials</p>
+          {error && (
+            <p className="text-red-500 font-semibold">{error}</p>
           )}
-        </div>
+        </form>
         <div className="w-full flex flex-col gap-2">
           <button
             disabled={!email || !password}

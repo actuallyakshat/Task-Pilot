@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { transporter } = require("../config/nodemailer");
 require("dotenv").config();
 
 //authentication
@@ -26,13 +27,7 @@ exports.auth = async (req, res) => {
 exports.signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User already exists",
-      });
-    }
+
     let hashedPassword;
     try {
       hashedPassword = await bcrypt.hash(password, 10);
@@ -73,9 +68,9 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({
+      return res.json({
         success: false,
-        message: "User does not exist",
+        message: "User Does Not Exist!",
       });
     }
     const payload = {
@@ -97,12 +92,63 @@ exports.login = async (req, res) => {
         data: payload,
       });
     } else {
-      return res.status(401).json({
+      return res.json({
         success: false,
-        message: "Invalid password",
+        message: "Invalid Password!",
       });
     }
   } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.sendOTP = async (req, res) => {
+  try {
+    const { email, name, otp } = req.body;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({
+        success: false,
+        message: "User already exists",
+      });
+    }
+    console.log("Check kar liya");
+    const info = await transporter.sendMail({
+      from: '"Task Pilot 📝" <taskpilot.app@gmail.com>',
+      to: `${email}`,
+      subject: "Your One Time Password for Registration at Task Pilot",
+      html: `
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          p {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          }
+        </style>
+      </head>
+      <body>
+        <h3>Hello ${name}!</h3>
+        <p>Your one-time password for registering an account at <b>Task Pilot</b> is: <b>${otp}</b></p>
+        <p>Wishing you a seamless and productive journey with <b>Task Pilot!</b></p>
+        <div>
+        <pre style="font-weight: bold; font-family: sans-serif;">Akshat Dubey
+Task Pilot</pre>
+        </div>
+      </body>
+    </html>
+  `,
+    });
+    return res.json({
+      success: true,
+      message: "OTP sent successfully.",
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
