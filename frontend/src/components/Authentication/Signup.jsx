@@ -4,9 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { sendOtp, signup } from "../../utils/HandleApi";
 import toast from "react-hot-toast";
+import { isLoggedInAtom } from "../../utils/Store";
+import { useAtomValue } from "jotai";
 
 export const Signup = () => {
   const navigate = useNavigate();
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
+  if (isLoggedIn) {
+    console.log("Bhai you are logged in already")
+    navigate("/list");
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,7 +22,6 @@ export const Signup = () => {
   const [passwordMatch, setPasswordsMatch] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [spinner, setSpinner] = useState(false);
-
   //otp validation
   const [askOTP, setAskOTP] = useState(false);
   const [otpEntered, setOtpEntered] = useState("");
@@ -239,7 +245,7 @@ export const Signup = () => {
           <div role="status" className="mb-4 mx-auto">
             <svg
               aria-hidden="true"
-              class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+              className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

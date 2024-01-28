@@ -6,7 +6,6 @@ import { useEffect } from "react";
 export const Hero = () => {
   const isDark = useAtomValue(isDarkAtom);
   const preloadImage = (url) => {
-    console.log("preloading")
     const img = new Image();
     img.src = url;
   };
