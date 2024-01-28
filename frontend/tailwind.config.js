@@ -8,11 +8,12 @@ export default {
         Rubik: ["Rubik", "sans-serif"],
       },
       backgroundImage: {
-        hero: "url('/src/assets/images/hero.jpg')",
+        heroLight: "url('/src/assets/images/bg-light.webp')",
+        heroDark: "url('/src/assets/images/bg-dark.webp')"
       },
       colors: {
-        light: "#EEEDEB",
-        dark: "#1B2430",
+        light: "#FFFFFF",
+        dark: "#000000",
       },
     },
   },

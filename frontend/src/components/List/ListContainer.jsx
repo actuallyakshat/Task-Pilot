@@ -73,7 +73,7 @@ export const ListContainer = () => {
         "mx-auto my-8 px-6 w-fit md:my-12 md:min-h-[600px] md:w-[60%] flex flex-col h-full"
       }
     >
-      {isLoggedIn && (
+      {isLoggedIn && user.name && (
         <>
           <p
             className={`${
