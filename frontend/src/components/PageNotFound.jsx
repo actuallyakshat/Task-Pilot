@@ -7,7 +7,7 @@ export const PageNotFound = () => {
     <div
       className={`${
         isDark ? "text-white" : "text-black"
-      } flex-1 flex-col flex justify-center items-center`}
+      } flex-1 flex-col flex font-mono justify-center items-center`}
     >
       <div className="text-center flex flex-col gap-4 -translate-y-12">
         <h1 className="text-6xl">Whoops 🙊</h1>

@@ -5,6 +5,9 @@ import { FaRegSun, FaRegMoon } from "react-icons/fa";
 import useSound from "use-sound";
 import switchsound from "../assets/sounds/switch.mp3";
 import { Logout } from "./Authentication/Logout";
+import { FaListUl } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+
 
 export const Navbar = () => {
   const [isDark, setIsDark] = useAtom(isDarkAtom);
@@ -36,7 +39,7 @@ export const Navbar = () => {
               onClick={themeHandler}
               className={`${
                 isDark ? "text-white" : ""
-              } transition-colors scale-125 mr-2 order-last md:order-first`}
+              } transition-colors scale-125 px-2 py-2 order-last md:order-first`}
             >
               {isDark ? <FaRegMoon /> : <FaRegSun />}
             </button>
@@ -65,17 +68,14 @@ export const Navbar = () => {
             {isLoggedIn && (
               <>
                 <Link to="/list">
-                  <button
-                    className={`hover:border-b ${
-                      isDark ? "border-white" : "border-black"
-                    } px-2 py-2 transition-colors font-[500]`}
-                  >
-                    To Do List
+                  <button className="px-2 py-2 text-xl transition-colors font-[500]">
+                    <FaListUl />
                   </button>
                 </Link>
-                <Link to="/login">
-                  <Logout />
+                <Link className="px-2 py-2 transition-colors text-xl" to="/profile">
+                  <FaUser />
                 </Link>
+                <Logout />
               </>
             )}
           </div>
