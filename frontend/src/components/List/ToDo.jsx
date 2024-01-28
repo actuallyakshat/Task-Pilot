@@ -54,7 +54,7 @@ export const ToDo = ({
   return (
     <div
       className={`${
-        isDark ? "bg-black/20 text-white hover:bg-black/60" : "bg-gray-50/80 hover:bg-gray-200"
+        isDark ? "bg-[#121317] text-white hover:bg-white/20" : "bg-gray-100/70 hover:bg-gray-200"
       } w-full md:w-[70%] mx-auto my-2 flex items-center font-[600] font-mono text-lg justify-between rounded-md shadow-md  transition-colors`}
     >
       <div

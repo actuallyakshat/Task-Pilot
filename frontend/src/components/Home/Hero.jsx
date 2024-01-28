@@ -1,9 +1,21 @@
 import { Link } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { isDarkAtom } from "../../utils/Store";
+import { useEffect } from "react";
 
 export const Hero = () => {
   const isDark = useAtomValue(isDarkAtom);
+  const preloadImage = (url) => {
+    console.log("preloading")
+    const img = new Image();
+    img.src = url;
+  };
+
+  useEffect(() => {
+    preloadImage("../../assets/images/bg-light.webp");
+    preloadImage("../../assets/images/bg-dark.webp");
+  }, []);
+
   return (
     <div
       className={`h-full w-full ${

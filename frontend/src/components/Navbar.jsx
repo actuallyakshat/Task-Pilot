@@ -9,13 +9,12 @@ import { Logout } from "./Authentication/Logout";
 export const Navbar = () => {
   const [isDark, setIsDark] = useAtom(isDarkAtom);
   const loading = useAtomValue(loadingAtom);
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
   const [switchSound] = useSound(switchsound, { volume: 0.4 });
   const themeHandler = () => {
     switchSound();
     setIsDark(!isDark);
   };
-
 
   return (
     <nav
@@ -44,12 +43,20 @@ export const Navbar = () => {
             {!isLoggedIn && (
               <div>
                 <Link to="/login">
-                  <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
+                  <button
+                    className={`hover:border-b ${
+                      isDark ? "border-white" : "border-black"
+                    } px-2 py-2 transition-colors font-[500]`}
+                  >
                     Login
                   </button>
                 </Link>
                 <Link to="/signup" className="sm:hidden md:inline">
-                  <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
+                  <button
+                    className={`hover:border-b ${
+                      isDark ? "border-white" : "border-black"
+                    } px-2 py-2 transition-colors font-[500]`}
+                  >
                     Signup
                   </button>
                 </Link>
@@ -58,7 +65,11 @@ export const Navbar = () => {
             {isLoggedIn && (
               <>
                 <Link to="/list">
-                  <button className="hover:bg-green-600 px-2 py-2 transition-colors rounded-md">
+                  <button
+                    className={`hover:border-b ${
+                      isDark ? "border-white" : "border-black"
+                    } px-2 py-2 transition-colors font-[500]`}
+                  >
                     To Do List
                   </button>
                 </Link>
