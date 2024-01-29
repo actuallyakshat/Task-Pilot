@@ -10,6 +10,8 @@ export default {
       backgroundImage: {
         heroLight: "url('/src/assets/images/bg-light.webp')",
         heroDark: "url('/src/assets/images/bg-dark.webp')",
+        signup: "url('/src/assets/images/signup.svg')",
+        login: "url('/src/assets/images/login.svg')",
       },
       colors: {
         light: "#FFFFFF",

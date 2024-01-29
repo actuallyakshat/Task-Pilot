@@ -27,7 +27,7 @@ export const Hero = () => {
         </h1>
         <h3 className=" md:w-[40ch] text-[1.1em]">
           Step into a World of Organized Living. <br />
-          <span className="font-bold">Task Pilot</span> Awaits Your Presence.
+          <span className="font-bold text-purple-600">Task Pilot</span> Awaits Your Presence.
           Join Now to Uncover the Secret to a Harmonious and Stress-Free
           Lifestyle
         </h3>

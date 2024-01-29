@@ -27,7 +27,7 @@ export const Navbar = () => {
     >
       <div className="w-full px-5 md:w-[70%] h-full flex items-center justify-between">
         <Link to="/">
-          <h1 className="font-Poppins uppercase text-xl font-[700]">
+          <h1 className="font-Poppins uppercase hover:text-purple-600 transition-colors text-xl font-[700]">
             task pilot
           </h1>
         </Link>

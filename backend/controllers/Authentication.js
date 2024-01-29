@@ -70,7 +70,7 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.json({
         success: false,
-        message: "User Does Not Exist!",
+        message: "User Does Not Exists!",
       });
     }
     const payload = {
