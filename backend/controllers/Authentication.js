@@ -155,3 +155,29 @@ Task Pilot</pre>
     });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const { email } = req.body;
+    await User.findOneAndDelete({ email: email }).then(() => {
+      return res
+        .status(200)
+        .json({
+          success: true,
+          message: "Account deleted successfully",
+        })
+        .catch((e) => {
+          console.log(e);
+          res.status(400).json({
+            success: false,
+            message: "Account couldn't be deleted",
+          });
+        });
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};

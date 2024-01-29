@@ -15,6 +15,7 @@ const {
   login,
   auth,
   sendOTP,
+  deleteUser,
 } = require("../controllers/Authentication");
 
 //Auth Routes
@@ -29,5 +30,6 @@ router.put("/update-todo", updateToDo);
 router.delete("/delete-todo", deleteToDo);
 router.put("/update-state", updateState);
 router.post("/send-otp", sendOTP);
+router.delete("/delete-user", deleteUser);
 
 module.exports = router;

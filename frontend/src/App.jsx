@@ -4,18 +4,25 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/Authentication/Login";
 import { Signup } from "./components/Authentication/Signup";
 import { PageNotFound } from "./components/PageNotFound";
-import { isDarkAtom, isLoggedInAtom, loadingAtom } from "./utils/Store";
+import {
+  isDarkAtom,
+  isLoggedInAtom,
+  loadingAtom,
+  userAtom,
+} from "./utils/Store";
 import { useSetAtom, useAtomValue, useAtom } from "jotai";
 import { Toaster } from "react-hot-toast";
 import { Home } from "./components/Home/Home";
 import { useEffect } from "react";
 import { authorization } from "./utils/HandleApi";
+import { Profile } from "./components/Authentication/Profile";
 import { Sidebar } from "./components/Sidebar";
 
 function App() {
   const isDark = useAtomValue(isDarkAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const setLoading = useSetAtom(loadingAtom);
+  const setUser = useSetAtom(userAtom);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,6 +30,7 @@ function App() {
         if (token) {
           const auth = await authorization(token);
           setIsLoggedIn(auth.data.login);
+          setUser(auth.data.data);
         } else {
           setIsLoggedIn(false);
         }
@@ -51,10 +59,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/list" element={<ListContainer />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
-
     </div>
   );
 }
