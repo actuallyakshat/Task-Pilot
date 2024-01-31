@@ -10,17 +10,19 @@ exports.auth = async (req, res) => {
     const token = req.header("Authorization").replace("Bearer ", "");
     if (token) {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      res.json({
+      return res.json({
         login: true,
         data: decode,
       });
     } else {
-      res.json({
+      return res.json({
         login: false,
         data: "error",
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("Internal Server Error", error);
+  }
 };
 
 //signup
@@ -159,21 +161,20 @@ Task Pilot</pre>
 exports.deleteUser = async (req, res) => {
   try {
     const { email } = req.body;
-    await User.findOneAndDelete({ email: email }).then(() => {
-      return res
-        .status(200)
-        .json({
+    await User.findOneAndDelete({ email: email })
+      .then(() => {
+        res.status(200).json({
           success: true,
           message: "Account deleted successfully",
-        })
-        .catch((e) => {
-          console.log(e);
-          res.status(400).json({
-            success: false,
-            message: "Account couldn't be deleted",
-          });
         });
-    });
+      })
+      .catch((e) => {
+        console.log(e);
+        res.status(400).json({
+          success: false,
+          message: "Account couldn't be deleted",
+        });
+      });
   } catch (error) {
     return res.status(500).json({
       success: false,

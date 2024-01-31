@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { sendOtp, signup } from "../../utils/HandleApi";
 import toast from "react-hot-toast";
-import { isDarkAtom, isLoggedInAtom } from "../../utils/Store";
+import { isLoggedInAtom } from "../../utils/Store";
 import { useAtomValue } from "jotai";
 
 export const Signup = () => {
@@ -22,10 +22,8 @@ export const Signup = () => {
   const [passwordMatch, setPasswordsMatch] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [spinner, setSpinner] = useState(false);
-  //otp validation
   const [askOTP, setAskOTP] = useState(false);
   const [otpEntered, setOtpEntered] = useState("");
-  const isDark = useAtomValue(isDarkAtom);
 
   const otpRef = useRef("");
 
@@ -109,10 +107,10 @@ export const Signup = () => {
           icon: "📬",
         });
       } else if (response.data.success == false) {
-        spinner(false);
+        setSpinner(false);
         setErrorMessage(true);
       } else {
-        spinner(false);
+        setSpinner(false);
         toast.error("Something Went Wrong");
       }
     } catch (error) {

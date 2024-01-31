@@ -4,10 +4,9 @@ import { useAtom, useAtomValue } from "jotai";
 import { FaRegSun, FaRegMoon } from "react-icons/fa";
 import useSound from "use-sound";
 import switchsound from "../assets/sounds/switch.mp3";
-import { Logout } from "./Authentication/Logout";
+import { Logout } from "./Account/Logout";
 import { FaListUl } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
-
 
 export const Navbar = () => {
   const [isDark, setIsDark] = useAtom(isDarkAtom);
@@ -72,7 +71,10 @@ export const Navbar = () => {
                     <FaListUl />
                   </button>
                 </Link>
-                <Link className="px-2 py-2 transition-colors text-xl" to="/profile">
+                <Link
+                  className="px-2 py-2 transition-colors text-xl"
+                  to="/profile"
+                >
                   <FaUser />
                 </Link>
                 <Logout />

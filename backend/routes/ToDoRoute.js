@@ -17,6 +17,7 @@ const {
   sendOTP,
   deleteUser,
 } = require("../controllers/Authentication");
+const { updateUser, changePassword } = require("../controllers/EditProfile");
 
 //Auth Routes
 router.post("/signup", signup);
@@ -31,5 +32,8 @@ router.delete("/delete-todo", deleteToDo);
 router.put("/update-state", updateState);
 router.post("/send-otp", sendOTP);
 router.delete("/delete-user", deleteUser);
+router.put("/update-user", updateUser);
+router.put("/change-password", changePassword);
+
 
 module.exports = router;

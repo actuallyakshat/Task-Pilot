@@ -30,27 +30,22 @@ const signup = async (name, email, password) => {
   }
 };
 
-const login = async (email, password, setError) => {
+const login = async (email, password, setError = () => {}) => {
   try {
     const response = await axios.post(`${baseUrl}/login`, { email, password });
     const data = response.data;
     if (!data.success) {
       setError(data.message);
-      return;
+      return null; // Return null to indicate unsuccessful login
     } else {
-      return data;
+      return data; // Return the data for successful login
     }
   } catch (error) {
-    console.log("Error occoured while logging in:", error);
-    return {
-      data: {
-        success: false,
-        message: "This User is not registered",
-      },
-    };
+    console.log("Error occurred while logging in:", error);
+    setError("Error occurred while logging in");
+    return null; // Return null for any error during login
   }
 };
-
 //CRUD
 const getAllToDo = async (setToDo, userid) => {
   if (!userid) {
@@ -100,8 +95,8 @@ const updateToDo = async (
     });
 };
 
-const deleteToDo = (userid, todoid, setToDo) => {
-  axios
+const deleteToDo = async (userid, todoid, setToDo) => {
+  await axios
     .delete(`${baseUrl}/delete-todo`, {
       data: { userid: userid, todoid: todoid },
     })
@@ -114,11 +109,13 @@ const deleteToDo = (userid, todoid, setToDo) => {
 };
 
 //updating status of todos
-const updateState = (todoid) => {
-  axios.put(`${baseUrl}/update-state`, { todoid: todoid }).catch((error) => {
-    console.log("Error while updating the state of todo.");
-    console.error(error);
-  });
+const updateState = async (todoid) => {
+  await axios
+    .put(`${baseUrl}/update-state`, { todoid: todoid })
+    .catch((error) => {
+      console.log("Error while updating the state of todo.");
+      console.error(error);
+    });
 };
 
 const sendOtp = async (email, name, otp) => {
@@ -137,6 +134,46 @@ const sendOtp = async (email, name, otp) => {
   }
 };
 
+const deleteAccount = async (email) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/delete-user`, {
+      data: { email },
+    });
+    if (response.status === 200) {
+      return true;
+    } else {
+      console.log("Account couldn't be deleted");
+      return false;
+    }
+  } catch (error) {
+    console.log("Internal Server Error While Deleting Account", error);
+    return false;
+  }
+};
+
+const editPassword = async (email, password) => {
+  try {
+    await axios.put(`${baseUrl}/change-password`, {
+      email: email,
+      password: password,
+    });
+    return true;
+  } catch (error) {
+    console.error("Error while changing password:", error);
+    return false;
+  }
+};
+
+const editUser = async (name, email) => {
+  try {
+    await axios.put(`${baseUrl}/update-user`, { name, email });
+    return true;
+  } catch (error) {
+    console.error("Error while editing user details:", error);
+    return false;
+  }
+};
+
 //editToDo
 export {
   getAllToDo,
@@ -148,4 +185,7 @@ export {
   authorization,
   updateState,
   sendOtp,
+  deleteAccount,
+  editPassword,
+  editUser,
 };

@@ -1,8 +1,8 @@
 import { Navbar } from "./components/Navbar";
 import { ListContainer } from "./components/List/ListContainer";
 import { Route, Routes } from "react-router-dom";
-import { Login } from "./components/Authentication/Login";
-import { Signup } from "./components/Authentication/Signup";
+import { Login } from "./components/Account/Login";
+import { Signup } from "./components/Account/Signup";
 import { PageNotFound } from "./components/PageNotFound";
 import {
   isDarkAtom,
@@ -15,8 +15,9 @@ import { Toaster } from "react-hot-toast";
 import { Home } from "./components/Home/Home";
 import { useEffect } from "react";
 import { authorization } from "./utils/HandleApi";
-import { Profile } from "./components/Authentication/Profile";
+import { Profile } from "./components/Account/Profile";
 import { Sidebar } from "./components/Sidebar";
+import { Dashboard } from "./components/Dashboard";
 
 function App() {
   const isDark = useAtomValue(isDarkAtom);
@@ -41,6 +42,7 @@ function App() {
     };
 
     fetchData();
+    setLoading(false);
   }, []);
 
   return (
@@ -60,6 +62,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/list" element={<ListContainer />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
