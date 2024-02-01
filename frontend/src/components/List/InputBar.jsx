@@ -44,7 +44,9 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
       </div>
       <div className="mx-auto w-full md:w-[70%] mt-4 flex gap-4">
         <button
-          className="px-6 py-2 text-md font-semibold text-white font-mono rounded-2xl bg-green-500 flex items-center justify-center"
+          className={`px-6 py-2 text-md font-semibold text-white font-mono rounded-2xl ${
+            isDark ? "bg-green-600" : "bg-purple-600"
+          } flex items-center justify-center`}
           onClick={() => {
             isUpdating ? updateToDoHandler() : addToDoHandler();
           }}
@@ -55,7 +57,7 @@ export const InputBar = ({ text, setText, setToDo, toDoId, inputRef }) => {
           ref={inputRef}
           type="text"
           placeholder="Add Task..."
-          className="bg-[#edf2f6] w-full p-3 rounded-lg font-mono"
+          className="bg-[#edf2f6] text-black w-full p-3 rounded-lg font-mono"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}

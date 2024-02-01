@@ -49,22 +49,18 @@ function App() {
   return (
     <div className="min-h-screen h-full w-full flex flex-col">
       <Toaster />
-      <Navbar />
+      {/* <Navbar /> */}
       <div
         className={`${
           isDark ? "bg-dark" : "bg-light"
         } flex-1 flex transition-colors`}
       >
-        {/* {isLoggedIn && <Sidebar />} */}
 
         <Routes>
           <Route index path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/list" element={<ListContainer />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/timer" element={<Timer />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

@@ -70,7 +70,7 @@ export const ListContainer = () => {
   return (
     <div
       className={
-        "mx-auto my-8 px-6 w-fit md:my-12 md:min-h-[600px] md:w-[60%] flex flex-col h-full"
+        "mx-auto my-8 px-6 w-fit md:my-12 md:min-h-[600px] md:w-[60%] flex flex-col"
       }
     >
       {isLoggedIn && user.name && (

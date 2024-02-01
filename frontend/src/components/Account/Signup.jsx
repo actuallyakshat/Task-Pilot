@@ -12,7 +12,7 @@ export const Signup = () => {
   const isLoggedIn = useAtomValue(isLoggedInAtom);
   if (isLoggedIn) {
     console.log("Bhai you are logged in already");
-    navigate("/list");
+    navigate("/dashboard");
   }
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");

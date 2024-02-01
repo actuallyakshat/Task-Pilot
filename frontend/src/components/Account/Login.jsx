@@ -9,7 +9,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   if (isLoggedIn) {
-    navigate("/list");
+    navigate("/dashboard");
   }
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ export const Login = () => {
           localStorage.setItem("token", data.token);
           setUser(data.data);
           setIsLoggedIn(true);
-          navigate("/list");
+          navigate("/dashboard");
         }
       }
     } catch (error) {
@@ -115,7 +115,9 @@ export const Login = () => {
               <h1 className="text-white font-[700] text-5xl mb-3 font-Rubik">
                 Welcome Back!
               </h1>
-              <h3 className="text-white font-[500] text-2xl mb-3 font-Rubik text-center px-6">Let&apos;s take back control of our day and get back to work!</h3>
+              <h3 className="text-white font-[500] text-2xl mb-3 font-Rubik text-center px-6">
+                Let&apos;s take back control of our day and get back to work!
+              </h3>
             </div>
           </div>
         </div>

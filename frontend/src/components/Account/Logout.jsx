@@ -11,14 +11,20 @@ export const Logout = () => {
   const logoutHandler = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
-    
   };
 
   // return <div onClick={logoutHandler}>Logout</div>;
   return (
     <AlertDialog.Root>
-      <AlertDialog.Trigger className="font-[500] text-2xl hover:text-red-500 transition-colors hover:border-b px-2 py-2 border-red-500">
-        <MdLogout />
+      <AlertDialog.Trigger
+        className={`w-full cursor-pointer transition-colors ${
+          isDark ? "hover:bg-white/20" : "hover:bg-black/10"
+        } rounded-md hover:text-red-600 transition-colors`}
+      >
+        <div className="flex p-2 gap-2 items-center font-semibold">
+          <MdLogout />
+          Logout
+        </div>
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay />
