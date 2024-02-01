@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { authorization } from "./utils/HandleApi";
 import { Profile } from "./components/Account/Profile";
 import { Sidebar } from "./components/Sidebar";
+import { Timer } from "./components/PomodoroTimer/Timer";
 import { Dashboard } from "./components/Dashboard";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           <Route path="/list" element={<ListContainer />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/timer" element={<Timer />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
