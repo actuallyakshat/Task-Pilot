@@ -3,8 +3,10 @@ import useSound from "use-sound";
 import timercomplete from "../assets/sounds/timercomplete.mp3";
 import { useAtom } from "jotai";
 import timerpause from "../assets/sounds/timerpause.mp3";
+import timerplay from "../assets/sounds/timerplay.mp3";
 
 import {
+  isPlayingAtom,
   //   initialMinutesAtom,
   //   initialSecondsAtom,
   minutesAtom,
@@ -16,10 +18,12 @@ export const useStartTimer = (callback) => {
   //   const [initialSeconds, setInitialSeconds] = useAtom(initialSecondsAtom);
   //   const [initialMinutes, setInitialMinutes] = useAtom(initialMinutesAtom);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
   const [timerComplete] = useSound(timercomplete, { volume: 0.7 });
+  const [timerPlay] = useSound(timerplay, { volume: 0.7 });
 
   const startTimer = () => {
+    timerPlay();
     setIsPlaying(true);
   };
 
@@ -51,6 +55,7 @@ export const useStartTimer = (callback) => {
     callback,
     setMinutes,
     setSeconds,
+    setIsPlaying,
   ]);
 
   return { startTimer };
@@ -58,14 +63,11 @@ export const useStartTimer = (callback) => {
 
 export const useStopTimer = () => {
   const [timerPause] = useSound(timerpause, { volume: 0.7 });
-
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
 
   const stopTimer = () => {
-    if (isPlaying) {
-      timerPause();
-      setIsPlaying(false);
-    }
+    timerPause();
+    setIsPlaying(false);
   };
 
   return { stopTimer };
