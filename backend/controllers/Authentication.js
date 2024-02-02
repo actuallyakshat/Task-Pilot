@@ -78,6 +78,7 @@ exports.login = async (req, res) => {
     const payload = {
       email: user.email,
       id: user.id,
+      hoursCompleted: user.hoursCompleted,
       name: user.name,
     };
 

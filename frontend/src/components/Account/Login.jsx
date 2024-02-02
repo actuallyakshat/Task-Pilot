@@ -33,6 +33,7 @@ export const Login = () => {
       const data = await login(email, password, setError);
       if (data) {
         if (data.success == true) {
+          console.log(data.data);
           localStorage.setItem("token", data.token);
           setUser(data.data);
           setIsLoggedIn(true);

@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  minsCompleted: {
+    type: Number,
+    default: 0,
+  },
   todos: [
     {
       type: mongoose.Schema.Types.ObjectId,
