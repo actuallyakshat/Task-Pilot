@@ -4,13 +4,16 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useAtomValue } from "jotai";
 import { Link } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export const Logout = () => {
+  const navigate = useNavigate();
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
   const isDark = useAtomValue(isDarkAtom);
   const logoutHandler = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
+    navigate("/");
   };
 
   // return <div onClick={logoutHandler}>Logout</div>;

@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
-  const user = useAtomValue(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const isDark = useAtomValue(isDarkAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const navigate = useNavigate();
@@ -96,7 +96,8 @@ export const Profile = () => {
       });
       return;
     }
-    if (editUser(name, email, password)) {
+    if (editUser(name, email, user, setUser)) {
+      console.log(user);
       toast.success("Your details were changed successfully!");
     } else {
       toast.error("Your account details couldn't be changed");
@@ -104,7 +105,6 @@ export const Profile = () => {
   };
 
   const saveChangesHandler = () => {
-    console.log("I am called");
     if (changePassword) {
       changeUserPassword();
     } else {
@@ -176,7 +176,7 @@ export const Profile = () => {
                 onClick={saveChangesHandler}
                 className={`${
                   passwordsMatch || !changePassword
-                    ? "bg-green-700"
+                    ? `${isDark ? "bg-green-700" : "bg-purple-600"}`
                     : "bg-gray-700"
                 } transition-colors rounded-md text-white block px-3 py-2 mt-4 w-fit`}
               >

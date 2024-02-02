@@ -1,9 +1,9 @@
 import { Navbar } from "./components/Navbar";
-import { ListContainer } from "./components/List/ListContainer";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/Account/Login";
 import { Signup } from "./components/Account/Signup";
 import { PageNotFound } from "./components/PageNotFound";
+import { useNavigate } from "react-router-dom";
 import {
   isDarkAtom,
   isLoggedInAtom,
@@ -21,6 +21,9 @@ import { Timer } from "./components/PomodoroTimer/Timer";
 import { Dashboard } from "./components/Dashboard";
 
 function App() {
+  const navigate = useNavigate();
+  const currentPath = window.location.pathname;
+
   const isDark = useAtomValue(isDarkAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const setLoading = useSetAtom(loadingAtom);
@@ -49,13 +52,12 @@ function App() {
   return (
     <div className="min-h-screen h-full w-full flex flex-col">
       <Toaster />
-      {/* <Navbar /> */}
+      {currentPath !== "/dashboard" && <Navbar />}
       <div
         className={`${
           isDark ? "bg-dark" : "bg-light"
         } flex-1 flex transition-colors`}
       >
-
         <Routes>
           <Route index path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />} />

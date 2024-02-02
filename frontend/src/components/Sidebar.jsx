@@ -8,7 +8,8 @@ import { Logout } from "./Account/Logout";
 import PropTypes from "prop-types";
 import useSound from "use-sound";
 import switchsound from "../assets/sounds/switch.mp3";
-import { FaRegSun, FaRegMoon } from "react-icons/fa";
+import { FaRegMoon } from "react-icons/fa";
+import { LuSun } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 export const Sidebar = ({ onItemClick }) => {
@@ -92,7 +93,7 @@ export const Sidebar = ({ onItemClick }) => {
                   </div>
                 ) : (
                   <div className="flex gap-2 p-2 items-center">
-                    <FaRegSun /> <p>Light</p>
+                    <LuSun /> <p>Light</p>
                   </div>
                 )}
               </button>
@@ -101,15 +102,11 @@ export const Sidebar = ({ onItemClick }) => {
               className={`w-full cursor-pointer transition-colors ${
                 isDark ? "hover:bg-white/20" : "hover:bg-black/10"
               } rounded-md`}
+              onClick={() => onItemClick("profile")}
             >
               <div className="flex gap-2 p-2 items-center">
                 <FaUser />
-                <button
-                  className="rounded-md font-semibold"
-                  onClick={() => onItemClick("profile")}
-                >
-                  Profile
-                </button>
+                <button className="rounded-md font-semibold">Profile</button>
               </div>
             </li>
 

@@ -15,7 +15,6 @@ exports.updateUser = async (req, res) => {
       });
     }
 
-    // Update the user information
     await User.findOneAndUpdate({ email }, { name, email });
 
     res.status(200).json({
