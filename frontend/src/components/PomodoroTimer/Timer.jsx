@@ -4,12 +4,20 @@ import "react-circular-progressbar/dist/styles.css";
 import { FaPlay, FaPause, FaGear } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "react-hot-toast";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { isDarkAtom } from "../../utils/Store";
 import useSound from "use-sound";
 import timerpause from "../../assets/sounds/timerpause.mp3";
 import timerplay from "../../assets/sounds/timerplay.mp3";
 import timercomplete from "../../assets/sounds/timercomplete.mp3";
+import {
+  initialMinutesAtom,
+  initialSecondsAtom,
+  minutesAtom,
+  secondsAtom,
+} from "../../utils/clockStore";
+import { useStartTimer } from "../../custom hooks/useTimer";
+import { useStopTimer } from "../../custom hooks/useTimer";
 
 export const Timer = () => {
   const isDark = useAtomValue(isDarkAtom);
@@ -20,11 +28,12 @@ export const Timer = () => {
   const [timerComplete] = useSound(timercomplete, { volume: 0.7 });
 
   //timer logic
-  const [minutes, setMinutes] = useState(50);
-  const [seconds, setSeconds] = useState(0);
-  const [initialMinutes, setInitialMinutes] = useState(50);
-  const [initialSeconds, setInitialSeconds] = useState(0);
-
+  const [minutes, setMinutes] = useAtom(minutesAtom);
+  const [seconds, setSeconds] = useAtom(secondsAtom);
+  const [initialSeconds, setInitialSeconds] = useAtom(initialSecondsAtom);
+  const [initialMinutes, setInitialMinutes] = useAtom(initialMinutesAtom);
+  const { startTimer } = useStartTimer();
+  const { stopTimer } = useStopTimer();
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
@@ -52,35 +61,35 @@ export const Timer = () => {
 
   const pauseHandler = () => {
     {
-      isPlaying ? timerPause() : timerPlay();
+      isPlaying ? stopTimer() : startTimer();
     }
-    if (minutes == 0 && seconds == 0) {
-      setInitialMinutes(50);
-      setMinutes(50);
-    }
+    // if (minutes == 0 && seconds == 0) {
+    //   setInitialMinutes(50);
+    //   setMinutes(50);
+    // }
     setIsPlaying(!isPlaying);
   };
 
-  useEffect(() => {
-    if (isPlaying) {
-      let interval = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes !== 0) {
-            setSeconds(59);
-            setMinutes(minutes - 1);
-          } else {
-            timerComplete();
-            setIsPlaying(false);
-            clearInterval(interval);
-          }
-        } else {
-          setSeconds(seconds - 1);
-        }
-      }, 1000);
+  // useEffect(() => {
+  //   if (isPlaying) {
+  //     let interval = setInterval(() => {
+  //       if (seconds === 0) {
+  //         if (minutes !== 0) {
+  //           setSeconds(59);
+  //           setMinutes(minutes - 1);
+  //         } else {
+  //           timerComplete();
+  //           setIsPlaying(false);
+  //           clearInterval(interval);
+  //         }
+  //       } else {
+  //         setSeconds(seconds - 1);
+  //       }
+  //     }, 1000);
 
-      return () => clearInterval(interval);
-    }
-  }, [seconds, isPlaying, minutes, timerComplete]);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [seconds, isPlaying, minutes, timerComplete]);
 
   return (
     <div className={`${isDark ? "text-white" : ""} px-8 flex-1 font-Rubik`}>

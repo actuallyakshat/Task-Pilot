@@ -7,3 +7,4 @@ const isLoggedInAtom = atom(false);
 const loadingAtom = atom(true);
 
 export { isUpdatingAtom, isDarkAtom, userAtom, isLoggedInAtom, loadingAtom };
+

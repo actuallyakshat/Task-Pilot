@@ -113,7 +113,7 @@ export const Profile = () => {
   };
 
   return (
-    <div className="flex-1 flex font-Rubik">
+    <div className="flex-1 h-full flex font-Rubik">
       <div
         className={`${
           isDark ? "text-white" : "text-black"

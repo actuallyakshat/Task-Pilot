@@ -22,20 +22,13 @@ export const Sidebar = ({ onItemClick }) => {
   return (
     <div
       className={`${
-        isDark ? "bg-gray-400/20" : "bg-white/20"
-      } min-h-[80%] h-full max-h-[80%] min-w-[20%] rounded-lg p-10 shadow-lg`}
+        isDark ? "bg-green-900" : "bg-purple-900"
+      } min-h-[80%] h-full max-h-[80%] min-w-[20%] text-white rounded-lg p-10 shadow-lg`}
     >
       <div className="flex w-full h-full font-Rubik flex-col items-start justify-between">
         <div className="flex w-full flex-col">
           <Link to="/">
-            <h1 className="text-4xl font-[800] text-center ">
-              Task{" "}
-              <span
-                className={`${isDark ? "text-green-600" : "text-purple-600"}`}
-              >
-                Pilot
-              </span>
-            </h1>
+            <h1 className="text-4xl font-[800] text-center ">Task Pilot</h1>
           </Link>
           <ul className="mt-8 flex flex-col gap-2">
             <li
