@@ -7,7 +7,7 @@ import timerplay from "../assets/sounds/timerplay.mp3";
 
 import {
   isPlayingAtom,
-  //   initialMinutesAtom,
+  initialMinutesAtom,
   //   initialSecondsAtom,
   minutesAtom,
   secondsAtom,
@@ -16,13 +16,17 @@ export const useStartTimer = (callback) => {
   const [minutes, setMinutes] = useAtom(minutesAtom);
   const [seconds, setSeconds] = useAtom(secondsAtom);
   //   const [initialSeconds, setInitialSeconds] = useAtom(initialSecondsAtom);
-  //   const [initialMinutes, setInitialMinutes] = useAtom(initialMinutesAtom);
+  const [initialMinutes, setInitialMinutes] = useAtom(initialMinutesAtom);
 
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
   const [timerComplete] = useSound(timercomplete, { volume: 0.7 });
   const [timerPlay] = useSound(timerplay, { volume: 0.7 });
 
   const startTimer = () => {
+    if (minutes == 0 && seconds == 0) {
+      setMinutes(50);
+      setInitialMinutes(50);
+    }
     timerPlay();
     setIsPlaying(true);
   };

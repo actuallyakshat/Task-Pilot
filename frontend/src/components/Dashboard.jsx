@@ -24,10 +24,9 @@ export const Dashboard = () => {
 
       case "profile":
         return <Profile />;
-      // Add more cases for additional pages
 
       default:
-        return null; // Render nothing if the page doesn't match any case
+        return null; 
     }
   };
   return (
@@ -38,12 +37,6 @@ export const Dashboard = () => {
     >
       <Sidebar onItemClick={handleSidebarItemClick} />
       {renderPage()}
-      {/* <div className="w-full bg-green-400">
-        <Routes>
-          <Route index path="/" element={<ListContainer />} />
-          <Route path="/pomodoro" element={<Timer />} />
-        </Routes>
-      </div> */}
     </div>
   );
 };

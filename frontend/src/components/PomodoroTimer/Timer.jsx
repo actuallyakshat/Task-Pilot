@@ -6,13 +6,11 @@ import { IoMdClose } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import { useAtom, useAtomValue } from "jotai";
 import { isDarkAtom } from "../../utils/Store";
-import useSound from "use-sound";
-import timerpause from "../../assets/sounds/timerpause.mp3";
-import timerplay from "../../assets/sounds/timerplay.mp3";
-import timercomplete from "../../assets/sounds/timercomplete.mp3";
+
 import {
   initialMinutesAtom,
   initialSecondsAtom,
+  isPlayingAtom,
   minutesAtom,
   secondsAtom,
 } from "../../utils/clockStore";
@@ -21,11 +19,8 @@ import { useStopTimer } from "../../custom hooks/useTimer";
 
 export const Timer = () => {
   const isDark = useAtomValue(isDarkAtom);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [timerPause] = useSound(timerpause, { volume: 0.7 });
-  const [timerPlay] = useSound(timerplay, { volume: 0.7 });
-  const [timerComplete] = useSound(timercomplete, { volume: 0.7 });
 
   //timer logic
   const [minutes, setMinutes] = useAtom(minutesAtom);
@@ -63,33 +58,9 @@ export const Timer = () => {
     {
       isPlaying ? stopTimer() : startTimer();
     }
-    // if (minutes == 0 && seconds == 0) {
-    //   setInitialMinutes(50);
-    //   setMinutes(50);
-    // }
+
     setIsPlaying(!isPlaying);
   };
-
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     let interval = setInterval(() => {
-  //       if (seconds === 0) {
-  //         if (minutes !== 0) {
-  //           setSeconds(59);
-  //           setMinutes(minutes - 1);
-  //         } else {
-  //           timerComplete();
-  //           setIsPlaying(false);
-  //           clearInterval(interval);
-  //         }
-  //       } else {
-  //         setSeconds(seconds - 1);
-  //       }
-  //     }, 1000);
-
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [seconds, isPlaying, minutes, timerComplete]);
 
   return (
     <div className={`${isDark ? "text-white" : ""} px-8 flex-1 font-Rubik`}>
